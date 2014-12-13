@@ -44,7 +44,7 @@ Typical installation process for developing purposes:
     $ cd raml
     $ go build
     $ go install
-	$ go test
+    $ go test
 
 Usage
 =====
@@ -75,7 +75,7 @@ Getting help
 ============
 
 * Look up the [RAML 0.8](http://raml.org/spec.html) spec if in doubt
-* Contact Alon, the maintainer directly: diamant.alon@gmail.com
+* Contact Alon, the maintainer, directly: diamant.alon@gmail.com
 
 Roadmap
 =======
@@ -90,4 +90,4 @@ Reporting Bugs and Contributing Code
 
 ## License
 
-See [LICENSE](https://github.com/go-raml/raml/blob/master/LICENSE) file.
+See [LICENSE](https://github.com/go-raml/raml/blob/v0/LICENSE) file.
