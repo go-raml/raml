@@ -1,0 +1,205 @@
+#%RAML 0.8
+title: Congo API For Drone Deliveries
+mediaType: application/json
+/deliveries:
+  get:
+    description: Get a list of deliveries
+    queryParameters:
+      sinceDate:
+        type: date
+        example: Mon, 14 Jul 2014 07:00:00 GMT
+      throughDate:
+        type: date
+        example: Mon, 18 Jul 2014 07:00:00 GMT
+    responses:
+      200:
+        body:
+          example: |
+            [
+              {
+                "id": "4",
+                "at": "Tue, 08 Jul 2014 13:00:00 GMT",
+                "toAddressId": "gi6w4fgi",
+                "orderItemId": "6782798",
+                "status": "completed",
+                "droneId": "f"
+              },
+              {
+                "id": "137",
+                "at": "Sun, 20 Jul 2014 19:36:00 GMT",
+                "toAddressId": "6tg23d6i",
+                "orderItemId": "7626827",
+                "status": "scheduled",
+                "droneId": "a"
+              },
+              {
+                "id": "8",
+                "at": "Sun, 20 Jul 2014 21:20:00 GMT",
+                "toAddressId": "gi6w4fgi",
+                "orderItemId": "9877292",
+                "status": "scheduled",
+                "droneId": "f"
+              }
+            ]
+  post:
+    description: Create/request a new delivery
+    body:
+      example: |
+        {
+          "at": "Sun, 20 Jul 2014 21:20:00 GMT",
+          "toAddressId": "273hh79",
+          "orderItemId": "736786"
+        }
+    responses:
+      201:
+        headers:
+          Location:
+        body:
+          example: |
+            {
+              "id": "987",
+              "at": "Sun, 20 Jul 2014 21:20:00 GMT",
+              "toAddressId": "273hh79",
+              "orderItemId": "736786",
+              "status": "scheduled",
+              "droneId": "f"
+            }
+  /{deliveryId}:
+    get:
+      description: Get information on a specific delivery
+      responses:
+        200:
+          body:
+            example: |
+              {
+                "id": "8",
+                "at": "Sun, 20 Jul 2014 21:20:00 GMT",
+                "toAddressId": "gi6w4fgi",
+                "orderItemId": "736786",
+                "status": "scheduled",
+                "droneId": "f"
+              }
+    patch:
+      description: Update the information on a specific delivery
+      body:
+        example: |
+          {
+            "at": "Mon, 21 Jul 2014 00:00:00 GMT"
+          }
+      responses:
+        200:
+          body:
+            example: |
+              {
+                "id": "8",
+                "at": "Mon, 21 Jul 2014 00:00:00 GMT",
+                "toAddressId": "gi6w4fgi",
+                "orderItemId": "736786",
+                "status": "scheduled",
+                "droneId": "f"
+              }
+    delete:
+      description: Cancel a specific delivery
+      responses:
+        204:
+/drones:
+  get:
+    description: Get a list of drones
+    queryParameters:
+      atLatitude:
+        description: Latitude in decimal degrees
+        type: number
+        example: 37.8
+      atLongitude:
+        description: Longitude in decimal degrees
+        type: number
+        example: -122.3
+      atAltitude:
+        description: Altitude in meters above the [ellipsoid](http://www.w3.org/TR/geolocation-API/#ref-wgs)
+        type: number
+        example: 0
+      atRange:
+        description: Maximum distance from location, in meters
+        type: number
+        example: 50
+        default: 100
+    responses:
+      200:
+        body:
+          example: |
+            [
+              {
+                "id": "a",
+                "latitude": 37.787862,
+                "longitude": -122.404694,
+                "altitude": 28.3,
+                "name": "High Flyer"
+              },
+              {
+                "id": "f",
+                "latitude": 37.852519,
+                "longitude": -122.237390,
+                "altitude": 56.9,
+                "name": "Camelot"
+              }
+            ]
+  post:
+    description: Add a new drone to the fleet
+    body:
+      example: |
+        {
+          "name": "Lancelot"
+        }
+  /{droneId}:
+    get:
+      description: Get information on a specific drone
+      responses:
+        200:
+          body:
+            example: |
+              {
+                "id": "f",
+                "latitude": 37.852519,
+                "longitude": -122.237390,
+                "altitude": 56.9,
+                "name": "Camelot"
+              }
+    patch:
+      description: Update the information on a specific drone
+      body:
+        example: |
+          {
+            "name": "Arthur"
+          }
+      responses:
+        200:
+          body:
+            example: |
+              {
+                "id": "f",
+                "latitude": 37.852519,
+                "longitude": -122.237390,
+                "altitude": 56.9,
+                "name": "Arthur"
+              }
+    delete:
+      description: Remove a drone from the fleet
+      responses:
+        204:
+    /deliveries:
+      get:
+        description: The deliveries scheduled for the current drone
+        responses:
+          200:
+            body:
+              example: |
+                [
+                  {
+                    "id": "8",
+                    "at": "Sun, 20 Jul 2014 21:20:00 GMT",
+                    "toAddressId": "gi6w4fgi",
+                    "orderItemId": "736786",
+                    "status": "scheduled",
+                    "droneId": "f"
+                  }
+                ]

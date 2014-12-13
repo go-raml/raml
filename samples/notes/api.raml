@@ -1,0 +1,94 @@
+#%RAML 0.8
+title: Notes Example API
+version: v2
+mediaType: application/json
+documentation:
+  - title: Overview
+    content: This is an example of a simple API for a "notes" service
+/notes:
+  description: A collection of notes
+  get:
+    description: List all notes, optionally filtered by a query string
+    queryParameters:
+      q:
+        description: An optional search query to filter the results
+        example: shopping
+    responses:
+      200:
+        body:
+         text/json:
+          example: |
+            [ { "id": 1, "title": "Buy some milk", "status": "done" },
+              { "id": 2, "title": "Return sweater", "status": "overdue", "dueInDays": -2 },
+              { "id": 3, "title": "Renew license", "status": "not done", "dueInDays": 1 },
+              { "id": 4, "title": "Join gym", "status": "not done", "dueInDays": 3 } ]
+  post:
+    description: Create a new note in the collection
+    body:
+      example: |
+        { "title": "Return sweater", "dueInDays": -2 }
+    headers:
+      X-Tracking-Example:
+        description: You can specify request headers like this
+        enum: [ accounting, payroll, finance ]
+        required: false # require it by changing this to true
+        example: accounting
+    responses:
+      201:
+        headers:
+          X-Powered-By:
+            description: You can describe response headers like this
+            example: RAML
+        body:
+         text/json:
+           example: |
+            {
+              "id": 2,
+              "title": "Return sweater",
+              "status": "overdue",
+              "dueInDays": -2
+            }
+  /{id}:
+    description: A specific note, identified by its id
+    uriParameters:
+      id:
+        description: The `id` of the specific note
+        type: number
+        example: 2
+    get:
+      description: Retrieve the specified note
+      responses:
+        200:
+         text/json:
+           body:
+            example: |
+              {
+                "id": 2,
+                "title": "Return sweater",
+                "status": "overdue",
+                "dueInDays": -2
+              }
+    patch:
+      description: Update the specified note (allowing partial information)
+      body:
+       text/json:
+        example: |
+          {
+            "title": "Exchange sweater",
+            "dueInDays: 3
+          }
+      responses:
+        200:
+         text/json:
+           body:
+            example: |
+              {
+                "id": 2,
+                "title": "Exchange sweater",
+                "status": "not done",
+                "dueInDays": 3
+              }
+    delete:
+      description: Remove the specified note
+      responses:
+        204:

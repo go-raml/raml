@@ -1,0 +1,199 @@
+#%RAML 0.8
+title: Notes Example API
+mediaType: application/json
+documentation:
+  - title: Overview
+    content: This is an example of a simple API for a "notes" service
+  - title: Explanation In Depth
+    content: Enjoy this
+baseUri: /lala
+protocols: [HTTP, HTTPS]
+schemas:
+  - schema1: "jsonStuff"
+    schema2: "<xmlStuff />"
+  - schema3: "another value"
+uriParameters:
+ communityDomain:
+   displayName: Community Domain
+   type: string
+ communityPath:
+   displayName: Community Path
+   type: string
+   pattern: ^[a-zA-Z0-9][-a-zA-Z0-9]*$
+   minLength: 1
+baseUriParameters:
+  test:
+    displayName: TEST PARAM
+    description: a crazy description
+    type: paramType
+    pattern: regexpCRAZYNESS
+    minLength: 10
+    maxLength: 20
+    minimum: 0.3
+    maximum: 0.5
+    repeat: true
+    required: false
+    default: "default string"
+    example: 50
+    enum: [ example, 4, 0.3 ]
+  apiDomain:
+    description: |
+      The sub-domain at which the API is accessible. Most API calls are sent to https://api.dropbox.com
+    enum: [ "api" ]
+traits:
+  - anothertrait:
+      usage: any way you want it
+      description: why
+    yetanothertrait:
+      usage: don't use it
+      description: honestly, don't
+  - testtrait:
+      usage: use this trait so happilly
+      description: Traits RULE
+      queryParameters:
+        test:
+          displayName: TEST PARAM
+          description: a crazy description
+          type: paramType
+          pattern: regexpCRAZYNESS
+          minLength: 10
+          maxLength: 20
+          minimum: 0.3
+          maximum: 0.5
+          repeat: true
+          required: false
+          default: "default string"
+          example: 50
+          enum: [ example, 4, 0.3 ]
+        apiDomain:
+          description: |
+            The sub-domain at which the API is accessible. Most API calls are sent to https://api.dropbox.com
+          enum: [ "api" ]
+      body:
+        application/json:
+          schema: responseExampleJSON
+          description: SDFSDF
+          example: DFGD
+          headers:
+            header5:
+              displayName: HEADER ONE
+            header9:
+              displayName: HEADER tWOOOOTWOTW
+        application/xml:
+          schema: responseExampleXML
+          description: SDFSDF
+          example: DFGD
+          formParameters:
+            formParam234:
+              displayName: SO WORKS
+          headers:
+            header10:
+              displayName: HEADER ONE
+            header20:
+              displayName: HEADER tWOOOOTWOTW
+      headers:
+        header1:
+          displayName: HEADER ONE
+        header2:
+          displayName: HEADER tWOOOOTWOTW
+      responses:
+        200:
+          description: response200
+          headers:
+            header1:
+              displayName: HEADER ONE
+            header2:
+              displayName: HEADER tWOOOOTWOTW
+          body:
+            application/json:
+              schema: responseExampleJSON
+              description: SDFSDF
+              example: DFGD
+              headers:
+                header5:
+                  displayName: HEADER ONE
+                header9:
+                  displayName: HEADER tWOOOOTWOTW
+            application/xml:
+              schema: responseExampleXML
+              description: SDFSDF
+              example: DFGD
+              formParameters:
+                formParam234:
+                  displayName: SO WORKS
+              headers:
+                header10:
+                  displayName: HEADER ONE
+                header20:
+                  displayName: HEADER tWOOOOTWOTW
+        404:
+          description: response404
+          headers:
+            header1:
+              displayName: HEADER ONE
+            header2:
+              displayName: HEADER tWOOOOTWOTW
+          body:
+            application/json:
+              schema: responseExampleJSON
+              description: SDFSDF
+              example: DFGD
+              headers:
+                header5:
+                  displayName: HEADER ONE
+                header9:
+                  displayName: HEADER tWOOOOTWOTW
+            application/xml:
+              schema: responseExampleXML
+              description: SDFSDF
+              example: DFGD
+              formParameters:
+                formParam234:
+                  displayName: SO WORKS
+              headers:
+                header10:
+                  displayName: HEADER ONE
+                header20:
+                  displayName: HEADER tWOOOOTWOTW
+resourceTypes:
+  - rttest:
+      description: test
+  - one:
+      description: hi
+    two:
+      description: bye
+      get:
+        description: test
+  - collection:
+      description: collectme
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                schema:
+                  <<resourcePathName>> # e.g. users
+      post:
+        responses:
+          200:
+            body:
+              schema:
+                  <<resourcePathName | !singularize>>  # e.g. user
+            image/jpeg:
+                example: <<resourcePathName | !singularize>>  # e.g. user
+  - member:
+      description: memme
+      get:
+        responses:
+          200:
+            body:
+              schema:
+                  <<resourcePathName>> # e.g. user
+/jobs:
+  displayName: Jobs
+  post:
+    description: Create a job
+    body:
+      text/xml:
+        schema:
+          schema1 # using a name from the root schemas
