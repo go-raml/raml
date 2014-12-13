@@ -25,9 +25,6 @@
 // the authors and should not be interpreted as representing official policies,
 // either expressed or implied, of DoAT.
 
-// This package contains the parser, validator and types that implement the
-// RAML specification, as documented here:
-// http://raml.org/spec.html
 package raml
 
 // TODO: Inspirations:

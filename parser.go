@@ -53,6 +53,7 @@ type RamlError struct {
 
 // Parse a RAML file. Returns a raml.APIDefinition value or an error if
 // everything is something went wrong.
+// This is the main entry point to the RAML parser.
 func ParseFile(filePath string) (*APIDefinition, error) {
 
 	// Get the working directory
