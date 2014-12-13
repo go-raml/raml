@@ -17,7 +17,7 @@ definitions. It was originally developed within [EverythingMe](https://www.every
 Status
 ------
 
-The **_raml_** package is currently immature and does not offering any kind of API
+The **_raml_** package is currently unstable and does not offer any kind of API
 stability guarantees.
 
 Installation
