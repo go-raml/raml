@@ -51,25 +51,25 @@ Usage
 
 Usage is very simple:
 
-    package main
-
+	package main
+	
 	import (
 		"fmt"
 		raml "gopkg.in/raml.v0"
 		"github.com/kr/pretty"
 	)
-
+	
 	func main() {
-
+	
 		fileName := "./samples/congo/api.raml"
-
-    	if apiDefinition, err := ParseFile(fileName); err != nil {
+	
+		if apiDefinition, err := raml.ParseFile(fileName); err != nil {
 			fmt.Printf("Failed parsing RAML file %s:\n  %s", fileName, err.Error())
 		} else {
 			fmt.Printf("Successfully parsed RAML file %s!\n\n", fileName)
 			pretty.Printf(apiDefinition)
 		}
-    }
+	}
 
 Getting help
 ============
