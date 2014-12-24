@@ -29,7 +29,9 @@ The yaml package may be installed by running:
 
 Opening that same URL in a browser will present a nice introductory page
 containing links to the documentation, source code, and all versions available
-for the given package.
+for the given package:
+
+https://gopkg.in/raml.v0
 
 The actual implementation of the package is in GitHub:
 
