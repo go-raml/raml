@@ -27,6 +27,8 @@
 
 package raml
 
+// This file contains all of the RAML schema validator related code.
+
 // TODO: Inspirations:
 // 		https://www.npmjs.com/package/raml-validate
 //		https://github.com/go-validator/validator

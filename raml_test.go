@@ -27,6 +27,8 @@
 
 package raml
 
+// This file contains tests.
+
 import (
 	"fmt"
 	"testing"
@@ -38,6 +40,25 @@ import (
 // 	 	https://github.com/raml-org/raml-js-parser/tree/master/test
 //		https://github.com/raml-org/raml-java-parser/tree/master/src/test
 // 		https://github.com/an2deg/pyraml-parser/tree/master/tests
+//		https://github.com/cybertk/ramlev/tree/master/test/fixtures
+
+func TestFailedParsing(t *testing.T) {
+
+	fileNames := []string{"./samples/bad_raml.raml"}
+
+	for _, fileName := range fileNames {
+
+		fmt.Printf("Attempting to parse RAML file: %s\n", fileName)
+
+		_, err := ParseFile(fileName)
+
+		if err == nil {
+			t.Fatalf("Failed detecting bad RAML file %s", fileName)
+		} else {
+			fmt.Printf("Detected bad RAML file %s:\n%s", fileName, err.Error())
+		}
+	}
+}
 
 func TestParsing(t *testing.T) {
 
@@ -65,5 +86,7 @@ func TestParsing(t *testing.T) {
 			t.Fatalf("Detected erroneous RAML version: %s",
 				apiDefinition.RAMLVersion)
 		}
+
+		// 	pretty.Println(apiDefinition)
 	}
 }

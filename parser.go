@@ -25,10 +25,9 @@
 // the authors and should not be interpreted as representing official policies,
 // either expressed or implied, of DoAT.
 
-// This package contains the parser, validator and types that implement the
-// RAML specification, as documented here:
-// http://raml.org/spec.html
 package raml
+
+// This file contains all of the RAML parser related code.
 
 import (
 	"bufio"
@@ -41,15 +40,7 @@ import (
 	"strings"
 
 	yaml "github.com/advance512/yaml"
-	"github.com/kr/pretty"
 )
-
-// A RamlError is returned by the ParseFile function when RAML or YAML problems
-// are encountered when parsing the RAML document.
-// When this error is returned, the value is still parsed partially.
-type RamlError struct {
-	Errors []string
-}
 
 // Parse a RAML file. Returns a raml.APIDefinition value or an error if
 // everything is something went wrong.
@@ -99,7 +90,7 @@ func ParseFile(filePath string) (*APIDefinition, error) {
 			fmt.Errorf("Error preprocessing RAML file (Error: %s)", err.Error())
 	}
 
-	pretty.Println(string(preprocessedContentsBytes))
+	//pretty.Println(string(preprocessedContentsBytes))
 
 	// Unmarshal into an APIDefinition value
 	apiDefinition := new(APIDefinition)
@@ -111,12 +102,22 @@ func ParseFile(filePath string) (*APIDefinition, error) {
 	// Any errors?
 	if err != nil {
 
-		return nil, fmt.Errorf("Problems parsing RAML:\n  %s", err.Error())
+		// Create a RAML error value
+		ramlError := new(RamlError)
+
+		// Copy the YAML errors into it..
+		if yamlErrors, ok := err.(*yaml.TypeError); ok {
+			populateRAMLError(ramlError, yamlErrors)
+		} else {
+			// Or just any other error, though this shouldn't happen.
+			ramlError.Errors = append(ramlError.Errors, err.Error())
+		}
+
+		return nil, ramlError
 	}
 
 	// Good.
 	return apiDefinition, nil
-
 }
 
 // Reads the contents of a file, returns a bytes buffer

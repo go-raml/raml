@@ -1,0 +1,127 @@
+#%RAML 0.8
+title: Notes Example API
+/jobs:
+  displayName: Jobs
+  post:
+      description: Create a job
+/projects:
+  displayName: Projects
+  post:
+    description: Create a project
+/resources:
+  displayName: Resources
+  type:
+    searchableCollection:
+      queryParamName: title
+      fallbackParamName: digest_all_fields
+  get:
+    description: Get a resource
+    is:
+      - secured:
+            tokenName: access_token
+        paged:
+            maxPages: 10
+  post:
+    description: Post a resource
+  /{resourceId}:
+    get:
+      description: Get a resource ID
+    put:
+      description: Put resource ID
+    delete:
+      description: Delete a resource ID
+    /yet_another:
+      get:
+        description: Yet another
+uriParameters:
+  communityDomain:
+    displayName: Community Domain
+    type: string
+  communityPath:
+    displayName: Community Path
+    type: string
+    pattern: ^[a-zA-Z0-9][-a-zA-Z0-9]*$
+    minLength: "hello"
+baseUri: /lala
+protocols: [HTTP, HTTPS]
+traits:
+  - secured:
+      queryParameters:
+        <<tokenName>>:
+          description: A valid <<tokenName>> is required
+    paged:
+      queryParameters:
+        numPages:
+          description: The number of pages to return, not to exceed <<maxPages>>
+resourceTypes:
+  - rttest:
+      description: test
+  - one:
+      description: hi
+  - auditableResource:
+      post?:
+        body:
+          application/x-www-form-urlencoded:
+            formParameters:
+              createAuthority:
+                description: |
+                  If the resource has a post method defined, expect a createAuthority
+                  property in its body
+      delete?:
+        body:
+          multipart/form-data:
+            formParameters:
+              deleteAuthority:
+                description: |
+                  If the resource has a delete method defined, expect a deleteAuthority
+                  property in its body
+  - searchableCollection:
+      get:
+        queryParameters:
+          <<queryParamName>>:
+            description: Return <<resourcePathName>> that have their <<queryParamName>> matching the given value
+          <<fallbackParamName>>:
+            description: If no values match the value given for <<queryParamName>>, use <<fallbackParamName>> instead
+securitySchemes:
+    - oauth_2_0:
+        description: |
+            Dropbox supports OAuth 2.0 for authenticating all API requests.
+        type: OAuth 2.0
+        describedBy:
+            headers:
+                Authorization:
+                    description: |
+                       Used to send a valid OAuth 2 access token. Do not use
+                       with the "access_token" query string parameter.
+                    type: string
+            queryParameters:
+                access_token:
+                    description: |
+                       Used to send a valid OAuth 2 access token. Do not use together with
+                       the "Authorization" header
+                    type: string
+            responses:
+                401:
+                    description: |
+                        Bad or expired token. This can happen if the user or Dropbox
+                        revoked or expired an access token. To fix, you should re-
+                        authenticate the user.
+                403:
+                    description: |
+                        Bad OAuth request (wrong consumer key, bad nonce, expired
+                        timestamp...). Unfortunately, re-authenticating the user won't help here.
+        settings:
+          authorizationUri: https://www.dropbox.com/1/oauth2/authorize
+          accessTokenUri: https://api.dropbox.com/1/oauth2/token
+          authorizationGrants: [ code, token ]
+    - oauth_1_0:
+        description: |
+            OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.
+        type: OAuth 1.0
+        settings:
+          requestTokenUri: https://api.dropbox.com/1/oauth/request_token
+          authorizationUri: https://www.dropbox.com/1/oauth/authorize
+          tokenCredentialsUri: https://api.dropbox.com/1/oauth/access_token
+    - customHeader:
+        description: |
+            A custom

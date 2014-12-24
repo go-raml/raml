@@ -25,12 +25,15 @@
 // the authors and should not be interpreted as representing official policies,
 // either expressed or implied, of DoAT.
 
+// This package contains the parser, validator and types that implement the
+// RAML specification, as documented here:
+// http://raml.org/spec.html
 package raml
 
-// Major TODOs:
-//
-// * We don't support !include of non-text files.
-//
+// This file contains all of the RAML types.
+
+// TODO: We don't support !include of non-text files. RAML supports including
+//       of many file types.
 
 // "Any" type, for our convenience
 type Any interface{}
@@ -85,11 +88,13 @@ type NamedParameter struct {
 
 	// The minLength attribute specifies the parameter value's minimum number
 	// of characters (string only)
-	MinLength *int
+	MinLength *int `yaml:"minLength"`
+	// TODO: go-yaml doesn't raise an error when the minLength isn't an integer!
+	// find out why and fix it.
 
 	// The maxLength attribute specifies the parameter value's maximum number
 	// of characters (string only)
-	MaxLength *int
+	MaxLength *int `yaml:"maxLength"`
 
 	// The minimum attribute specifies the parameter's minimum value. (numbers
 	// only)
@@ -116,6 +121,8 @@ type NamedParameter struct {
 	// The default value to use for the property if the property is omitted or
 	// its value is not specified
 	Default Any
+
+	format Any `ramlFormat:"Named parameters must be mappings. Example: userId: {displayName: 'User ID', description: 'Used to identify the user.', type: 'integer', minimum: 1, example: 5}"`
 }
 
 // Headers used in Methods and other types
@@ -133,9 +140,8 @@ type Documentation struct {
 // Resources CAN have alternate representations. For example, an API might
 // support both JSON and XML representations.
 type Body struct {
-
+	mediaType string `yaml:"mediaType"`
 	// TODO: Fill this during the post-processing phase
-	mediaType string
 
 	// The structure of a request or response body MAY be further specified
 	// by the schema property under the appropriate media type.
@@ -222,9 +228,9 @@ type Bodies struct {
 // Resource methods MAY have one or more responses.
 type Response struct {
 
-	// TODO: Fill this during the post-processing phase
 	// HTTP status code of the response
 	HTTPCode HTTPCode
+	// TODO: Fill this during the post-processing phase
 
 	// Clarifies why the response was emitted. Response descriptions are
 	// particularly useful for describing error conditions.
@@ -314,8 +320,8 @@ type Trait struct {
 	// locale-specific pluralization of its original value. The only locale
 	// supported by this version of RAML is United States English.
 
-	// TODO: Fill this during the post-processing phase
 	Name string
+	// TODO: Fill this during the post-processing phase
 
 	// The usage property of a resource type or trait is used to describe how
 	// the resource type or trait should be used
@@ -359,9 +365,8 @@ type Trait struct {
 // Method that is part of a ResourceType. DIfferentiated from Traits since it
 // doesn't contain Usage, optional fields etc.
 type ResourceTypeMethod struct {
-
-	// TODO: Fill this during the post-processing phase
 	Name string
+	// TODO: Fill this during the post-processing phase
 
 	// Briefly describes what the method does to the resource
 	Description string
@@ -486,9 +491,8 @@ type SecuritySchemeMethod struct {
 // Most REST APIs have one or more mechanisms to secure data access, identify
 // requests, and determine access level and data visibility.
 type SecurityScheme struct {
-
-	// TODO: Fill this during the post-processing phase
 	Name string
+	// TODO: Fill this during the post-processing phase
 
 	// Briefly describes the security scheme
 	Description string
@@ -526,8 +530,8 @@ type SecurityScheme struct {
 
 // Methods are operations that are performed on a resource
 type Method struct {
-	// TODO: Fill this during the post-processing phase
 	Name string
+	// TODO: Fill this during the post-processing phase
 
 	// Briefly describes what the method does to the resource
 	Description string
@@ -586,17 +590,17 @@ type Method struct {
 // A resource is the conceptual mapping to an entity or set of entities.
 type Resource struct {
 
-	// TODO: Fill this during the post-processing phase
 	// Resources are identified by their relative URI, which MUST begin with
 	// a slash (/).
 	URI string
-
 	// TODO: Fill this during the post-processing phase
+
 	// A resource defined as a child property of another resource is called a
 	// nested resource, and its property's key is its URI relative to its
 	// parent resource's URI. If this is not nil, then this resource is a
 	// child resource.
 	Parent *Resource
+	// TODO: Fill this during the post-processing phase
 
 	// A friendly name to the resource
 	DisplayName string
@@ -650,7 +654,7 @@ type Resource struct {
 	// the root-level resourceTypes property.
 	// NOTE: inline not currently supported.
 	Type *DefinitionChoice `yaml:"type"`
-	// TODO: Add support for inline ResourceTypes!
+	// TODO: Add support for inline ResourceTypes
 
 	// A resource may use the is property to apply the list of traits to all
 	// its methods.
