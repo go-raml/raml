@@ -1,10 +1,10 @@
 Looking for an active maintainer!
 =================================
 
-June 5th, 2016
+August 21st, 2016
 --------------
 
-Unfortunately, I haven't been able to continue active support for this project, as I've been busy with other private commercial endeavours. Since this project is in use in several projects and has several active forks, I'm looking for someone to take over this and make it useful once again.
+Unfortunately, in the past year I haven't been able to dedicate time to actively support this project, as I've been busy with other private endeavours. Since this project is in use in several projects and has several active forks, I'm looking for someone to take over or assist with maintenance.
 
 The basic features I'd suggest are:
 
@@ -14,7 +14,7 @@ The basic features I'd suggest are:
 * Generate go client for API
 * Additional features, taking inspiration from https://github.com/go-swagger/go-swagger
 
-If you're interested in taking over this project, please let me know. Email me at diamant.alon@gmail.com.
+If you're interested in taking over this project, the discussion can be found here: https://github.com/go-raml/raml/issues/6
 
 Thanks!
 
