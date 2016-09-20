@@ -1,7 +1,9 @@
+[![Build Status](https://travis-ci.org/go-raml/raml.svg?branch=v0)](https://travis-ci.org/go-raml/raml)
+
 Looking for an active maintainer!
 =================================
 
-August 21st, 2016
+September 21st, 2016
 --------------
 
 Unfortunately, in the past year I haven't been able to dedicate time to actively support this project, as I've been busy with other private endeavours. Since this project is in use in several projects and has several active forks, I'm looking for someone to take over or assist with maintenance.
