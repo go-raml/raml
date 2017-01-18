@@ -1,36 +1,10 @@
 [![Build Status](https://travis-ci.org/go-raml/raml.svg?branch=v0)](https://travis-ci.org/go-raml/raml)
 
-Looking for an active maintainer!
-=================================
-
-September 21st, 2016
---------------
-
-Unfortunately, in the past year I haven't been able to dedicate time to actively support this project, as I've been busy with other private endeavours. Since this project is in use in several projects and has several active forks, I'm looking for someone to take over or assist with maintenance.
-
-The basic features I'd suggest are:
-
-* Support for RAML 1.0 spec
-* Validate using jsonschema, full integration
-* Implement an integration with https://github.com/astaxie/beego or https://github.com/labstack/echo to auto-generate server code
-* Generate go client for API
-* Additional features, taking inspiration from https://github.com/go-swagger/go-swagger
-
-If you're interested in taking over this project, the discussion can be found here: https://github.com/go-raml/raml/issues/6
-
-Thanks!
-
---
-
-
-
-
+Looking for active maintainers!
+===============================
 
 
 --
-
-
-
 
 
 
