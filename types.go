@@ -702,7 +702,7 @@ type APIDefinition struct {
 	// base URI parameters are available for replacement:
 	//
 	// version - The content of the version field.
-	BaseUri string
+	BaseUri string `yaml:"baseUri"`
 	// TODO: If a URI template variable in the base URI is not explicitly
 	// described in a baseUriParameters property, and is not specified in a
 	// resource-level baseUriParameters property, it MUST still be treated as
